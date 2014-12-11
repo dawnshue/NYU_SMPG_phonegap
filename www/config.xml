@@ -2,8 +2,8 @@
 <widget xmlns   = "http://www.w3.org/ns/widgets"
         xmlns:gap   = "http://phonegap.com/ns/1.0"
         id          = "com.gaming_platform.weiqi"
-        versionCode = "7"
-        version     = "1.1.0" >
+        versionCode = "10"
+        version     = "1.2.0" >
 
     <name>WEIQI</name>
 
@@ -51,10 +51,10 @@
         Otherwise, you can specify specific domains:
     -->
     <access origin="*"/>
-    <gap:plugin name="com.phonegap.plugins.pushplugin" version="2.4.0">
+    <gap:plugin name="com.phonegap.plugins.pushplugin" version="2.4.0"/>
     <gap:plugin name="com.phonegap.plugins.facebookconnect" version="0.9.0">
-        <param name="APP_ID" value="571155283016784" />
-        <param name="APP_NAME" value="LinesOfAction"/>
+        <param name="APP_ID" value="373622986131722" />
+        <param name="APP_NAME" value="Weiqi"/>
     </gap:plugin>
     
 </widget>
