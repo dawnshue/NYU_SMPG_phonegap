@@ -1,12 +1,40 @@
-function successHandler (result) {
-      alert('result = ' + result);
+    function successHandler (result) {
+      // alert('result = ' + result);
     }
     function errorHandler (error) {
-      alert('error = ' + error);
+      // alert('error = ' + error);
+    }
+    function sendMessageToPlatform(message) {
+      // alert("sendMessageToPlatform:" + JSON.stringify(message));
+      window.document.getElementById("platform_iframe").contentWindow.postMessage(
+        message, "*");
+    }
+    function sendNotification(payload, error) {
+      // alert("notifying the platform");
+      sendMessageToPlatform({payload: payload, error: error});
+    }
+    function onDeviceReady() {
+      facebookConnectPlugin.login(["public_profile"],
+        fbLoginSuccess,
+        function (error) { sendToken("", error); }
+      );
+    }
+    
+    function sendToken(token, error) {
+      sendMessageToPlatform({token: token, error: error});
+      registerForPushNotification();
+    }
+    function fbLoginSuccess(userData) {
+      facebookConnectPlugin.getAccessToken(function(token) {
+          sendToken(token, "");
+      }, function(error) {
+          sendToken("", error);
+      });
     }
     function registerForPushNotification() {
-      alert('registerForPushNotification for cordova.platformId:' + cordova.platformId);
+      // alert("device is ready");
       var pushNotification = window.plugins.pushNotification;
+      // alert(cordova.platformId);
       if ( cordova.platformId == 'android' || cordova.platformId == 'Android' || cordova.platformId == "amazon-fireos" ){
         pushNotification.register(
           successHandler,
@@ -15,6 +43,7 @@ function successHandler (result) {
               "senderID":"800628973374",
               "ecb":"onNotification"
           });
+        // alert("registration sent");
       } else {
         pushNotification.register(
           tokenHandler,
@@ -29,7 +58,7 @@ function successHandler (result) {
     }
     // iOS
     function onNotificationAPN(event) {
-      alert('RECEIVED:' + JSON.stringify(event));
+      // alert('RECEIVED:' + JSON.stringify(event));
       if ( event.alert )
       {
           navigator.notification.alert(event.alert);
@@ -41,63 +70,39 @@ function successHandler (result) {
       }
       if ( event.badge )
       {
-          window.plugins.pushNotification.setApplicationIconBadgeNumber(successHandler, errorHandler, event.badge);
+          pushNotification.setApplicationIconBadgeNumber(successHandler, errorHandler, event.badge);
       }
     }
     function tokenHandler(result) {
       // Your iOS push server needs to know the token before it can push to this device
       // here is where you might want to send it the token for later use.
-      alert('device token = ' + result);
-      document.getElementById("regIdTextarea").value = result;
+      // alert('device token = ' + result);
     }
     // Android and Amazon Fire OS
     function onNotification(e) {
-      alert('RECEIVED:' + JSON.stringify(e));
+      // alert('RECEIVED:' + JSON.stringify(e));
       switch( e.event )
       {
         case 'registered':
           if ( e.regid.length > 0 )
           {
             // Your GCM push server needs to know the regID before it can push to this device
-            alert('REGID:' + e.regid);
-            document.getElementById("regIdTextarea").value = e.regid;
+            // alert('REGID:' + e.regid);
             window.regid = e.regid;
+            sendNotification({regid: e.regid}, "");
+            //save registration id
           }
         break;
         case 'message':
-          // if this flag is set, this notification happened while we were in the foreground.
-          // you might want to play a sound to get the user's attention, throw up a dialog, etc.
-          // e.foreground , e.coldstart
-          // e.soundname || e.payload.sound
-          // e.payload.message
-          // e.payload.msgcnt
-          // e.payload.timeStamp
+         // call function to handle e.payload
+         sendNotification({notification: e.payload}, "");
         break;
         case 'error':
-          // e.msg
+        //error?
         break;
       }
     }
-    function redirect(token, error) {
-      document.getElementById("fb_access_token").value = "access_token=" + token + "&error=" + error;
-      registerForPushNotification();
-    }
-    
-    function fbLoginSuccess(userData) {
-        facebookConnectPlugin.getAccessToken(function(token) {
-            redirect(token, "");
-        }, function(error) {
-            redirect("", error);
-        });
-    }
-    function onDeviceReady() {
-        facebookConnectPlugin.login(["public_profile"],
-            fbLoginSuccess,
-            function (error) { redirect("", error); }
-        );
-    }
-
-    //document.addEventListener("deviceready", onDeviceReady, false);
+    document.addEventListener("deviceready", onDeviceReady, false);
     window.addEventListener("message", function (event) {
       eval(event.data);
     });
