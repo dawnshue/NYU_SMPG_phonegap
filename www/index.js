@@ -32,9 +32,9 @@
       });
     }
     function registerForPushNotification() {
-      // alert("device is ready");
+      alert("device is ready");
       var pushNotification = window.plugins.pushNotification;
-      // alert(cordova.platformId);
+      alert("Cordova platformid: " + cordova.platformId);
       if ( cordova.platformId == 'android' || cordova.platformId == 'Android' || cordova.platformId == "amazon-fireos" ){
         pushNotification.register(
           successHandler,
@@ -43,7 +43,7 @@
               "senderID":"800628973374",
               "ecb":"onNotification"
           });
-        // alert("registration sent");
+        alert("registration sent");
       } else {
         pushNotification.register(
           tokenHandler,
