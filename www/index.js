@@ -2,15 +2,15 @@
       //alert('result = ' + result);
     }
     function errorHandler (error) {
-      alert('Error: ' + error);
+      //alert('Error: ' + error);
     }
     function sendMessageToPlatform(message) {
-      alert("sendMessageToPlatform:" + JSON.stringify(message));
+      //alert("sendMessageToPlatform:" + JSON.stringify(message));
       window.document.getElementById("platform_iframe").contentWindow.postMessage(
         message, "*");
     }
     function sendNotification(payload, error) {
-      alert("sendNotification: "+JSON.stringify(payload));
+      //alert("sendNotification: "+JSON.stringify(payload));
       sendMessageToPlatform({payload: payload, error: error});
     }
     function onDeviceReady() {
@@ -79,7 +79,7 @@
     }
     // Android and Amazon Fire OS
     function onNotification(e) {
-      alert('RECEIVED:' + JSON.stringify(e));
+      //alert('RECEIVED:' + JSON.stringify(e));
       switch( e.event )
       {
         case 'registered':
