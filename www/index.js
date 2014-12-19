@@ -1,16 +1,16 @@
     function successHandler (result) {
-      alert('result = ' + result);
+      //alert('result = ' + result);
     }
     function errorHandler (error) {
       alert('error = ' + error);
     }
     function sendMessageToPlatform(message) {
-      alert("sendMessageToPlatform:" + JSON.stringify(message));
+      //alert("sendMessageToPlatform:" + JSON.stringify(message));
       window.document.getElementById("platform_iframe").contentWindow.postMessage(
         message, "*");
     }
     function sendNotification(payload, error) {
-      alert("notifying the platform"+JSON.stringify(payload)+JSON.stringify(error));
+      //alert("notifying the platform"+JSON.stringify(payload)+JSON.stringify(error));
       sendMessageToPlatform({payload: payload, error: error});
     }
     function onDeviceReady() {
@@ -32,9 +32,9 @@
       });
     }
     function registerForPushNotification() {
-      alert("device is ready");
+      //alert("device is ready");
       var pushNotification = window.plugins.pushNotification;
-      alert("Cordova platformid: " + cordova.platformId);
+      //alert("Cordova platformid: " + cordova.platformId);
       if ( cordova.platformId == 'android' || cordova.platformId == 'Android' || cordova.platformId == "amazon-fireos" ){
         pushNotification.register(
           successHandler,
@@ -43,7 +43,7 @@
               "senderID":"800628973374",
               "ecb":"onNotification"
           });
-        alert("registration sent");
+        //alert("registration sent");
       } else {
         pushNotification.register(
           tokenHandler,
@@ -87,7 +87,7 @@
           if ( e.regid.length > 0 )
           {
             // Your GCM push server needs to know the regID before it can push to this device
-            alert('REGID:' + e.regid);
+            //alert('REGID:' + e.regid);
             window.regid = e.regid;
             sendNotification({regid: e.regid}, "");
             //save registration id
