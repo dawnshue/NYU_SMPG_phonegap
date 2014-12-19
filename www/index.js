@@ -1,16 +1,16 @@
     function successHandler (result) {
-      // alert('result = ' + result);
+      alert('result = ' + result);
     }
     function errorHandler (error) {
-      // alert('error = ' + error);
+      alert('error = ' + error);
     }
     function sendMessageToPlatform(message) {
-      // alert("sendMessageToPlatform:" + JSON.stringify(message));
+      alert("sendMessageToPlatform:" + JSON.stringify(message));
       window.document.getElementById("platform_iframe").contentWindow.postMessage(
         message, "*");
     }
     function sendNotification(payload, error) {
-      // alert("notifying the platform");
+      alert("notifying the platform"+JSON.stringify(payload)+JSON.stringify(error));
       sendMessageToPlatform({payload: payload, error: error});
     }
     function onDeviceReady() {
