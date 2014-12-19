@@ -2,15 +2,15 @@
       //alert('result = ' + result);
     }
     function errorHandler (error) {
-      alert('error = ' + error);
+      alert('Error: ' + error);
     }
     function sendMessageToPlatform(message) {
-      //alert("sendMessageToPlatform:" + JSON.stringify(message));
+      alert("sendMessageToPlatform:" + JSON.stringify(message));
       window.document.getElementById("platform_iframe").contentWindow.postMessage(
         message, "*");
     }
     function sendNotification(payload, error) {
-      //alert("notifying the platform"+JSON.stringify(payload)+JSON.stringify(error));
+      alert("sendNotification: "+JSON.stringify(payload));
       sendMessageToPlatform({payload: payload, error: error});
     }
     function onDeviceReady() {
@@ -32,9 +32,8 @@
       });
     }
     function registerForPushNotification() {
-      //alert("device is ready");
       var pushNotification = window.plugins.pushNotification;
-      //alert("Cordova platformid: " + cordova.platformId);
+      //alert("registerforPushNotification: Cordova platformid: " + cordova.platformId);
       if ( cordova.platformId == 'android' || cordova.platformId == 'Android' || cordova.platformId == "amazon-fireos" ){
         pushNotification.register(
           successHandler,
