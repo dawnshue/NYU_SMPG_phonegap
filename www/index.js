@@ -5,7 +5,7 @@
       //alert('Error: ' + error);
     }
     function sendMessageToPlatform(message) {
-      //alert("sendMessageToPlatform:" + JSON.stringify(message));
+      alert("sendMessageToPlatform:" + JSON.stringify(message));
       window.document.getElementById("platform_iframe").contentWindow.postMessage(
         message, "*");
     }
@@ -34,7 +34,9 @@
     function registerForPushNotification() {
       var pushNotification = window.plugins.pushNotification;
       //alert("registerforPushNotification: Cordova platformid: " + cordova.platformId);
-      if ( cordova.platformId == 'android' || cordova.platformId == 'Android' || cordova.platformId == "amazon-fireos" ){
+      if ( cordova.platformId == 'android' || 
+            cordova.platformId == 'Android' || 
+            cordova.platformId == "amazon-fireos" ){
         pushNotification.register(
           successHandler,
           errorHandler,
